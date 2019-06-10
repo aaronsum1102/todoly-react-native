@@ -3,7 +3,7 @@ import { StyleSheet, View, StatusBar, SafeAreaView } from "react-native"
 import Color from "./assests/ColorEnum"
 import TodoCard from "./components/TodoCard"
 import AppStatusBar from "./components/AppStatusBar"
-
+import AppBar from "./components/AppBar"
 export interface Props {
 
 }
@@ -17,12 +17,10 @@ export default class App extends React.Component<Props, State> {
         return (
             <View style={{ flex: 1 }}>
                 <AppStatusBar />
-                <SafeAreaView style={{ flex: 1 }}>
-                    <View style={styles.container}>
-                        <TodoCard todo="task to do" isDone={false}></TodoCard>
-                    </View>
-                </SafeAreaView>
-
+                <View style={styles.container}>
+                    <AppBar />
+                    <TodoCard todo="task to do" isDone={false}></TodoCard>
+                </View>
             </View >
 
 
@@ -35,7 +33,6 @@ const styles = StyleSheet.create({
         flex: 1,
         justifyContent: 'flex-start',
         alignItems: 'center',
-        backgroundColor: '#F5FCFF',
-        padding: 16
+        backgroundColor: Color.LIGHT_GRAY,
     },
 });

@@ -41,7 +41,8 @@ export default class ToDoCard extends React.Component<Props, State> {
 
 const styles = StyleSheet.create({
     todoCard: {
-        width: "100%"
+        width: "100%",
+        padding: 16,
     },
     todoText: {
         fontSize: 14,
