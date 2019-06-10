@@ -6,6 +6,7 @@ import Color from "../assests/ColorEnum"
 export interface Props {
     todo: string
     isDone: boolean
+    id: string
 }
 
 interface State {
@@ -43,6 +44,7 @@ const styles = StyleSheet.create({
     todoCard: {
         width: "100%",
         padding: 16,
+        paddingTop: 8,
     },
     todoText: {
         fontSize: 14,
