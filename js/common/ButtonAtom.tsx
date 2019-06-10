@@ -1,5 +1,6 @@
 import React from "react"
-import { StyleSheet, View, Text, TouchableOpacity, ViewStyle, TextStyle } from "react-native"
+import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import Color from "../assests/ColorEnum"
 
 export interface Props {
     name: string
@@ -12,13 +13,6 @@ export enum ButtonType {
     CONTAINED = "contained",
     OUTLINED = "outlined",
     TEXT = "text"
-}
-
-enum Color {
-    PRIMARY = "#00e676",
-    DARK_GRAY = "#bdbdbd",
-    LIGHT_GRAY = "#eeeeee",
-    BLACK = "#000000"
 }
 
 export default class ButtonAtom extends React.Component<Props> {

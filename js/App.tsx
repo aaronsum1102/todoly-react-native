@@ -1,6 +1,8 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
-import ButtonAtom, { ButtonType } from "./common/ButtonAtom"
+import { StyleSheet, View, StatusBar, SafeAreaView } from "react-native"
+import Color from "./assests/ColorEnum"
+import TodoCard from "./components/TodoCard"
+import AppStatusBar from "./components/AppStatusBar"
 
 export interface Props {
 
@@ -13,9 +15,17 @@ interface State {
 export default class App extends React.Component<Props, State> {
     render() {
         return (
-            <View style={styles.container}>
-                <ButtonAtom name="Press me" isActive={true} type={ButtonType.CONTAINED}></ButtonAtom>
-            </View>
+            <View style={{ flex: 1 }}>
+                <AppStatusBar />
+                <SafeAreaView style={{ flex: 1 }}>
+                    <View style={styles.container}>
+                        <TodoCard todo="task to do" isDone={false}></TodoCard>
+                    </View>
+                </SafeAreaView>
+
+            </View >
+
+
         )
     }
 }
@@ -23,8 +33,9 @@ export default class App extends React.Component<Props, State> {
 const styles = StyleSheet.create({
     container: {
         flex: 1,
-        justifyContent: 'center',
+        justifyContent: 'flex-start',
         alignItems: 'center',
         backgroundColor: '#F5FCFF',
+        padding: 16
     },
 });
