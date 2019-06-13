@@ -1,10 +1,11 @@
 import React from "react"
-import { StyleSheet, View, StatusBar, SafeAreaView } from "react-native"
+import { StyleSheet, View, Text, Platform } from "react-native"
 import Color from "./assests/ColorEnum"
 import TodoList from "./components/TodoList"
 import AppStatusBar from "./components/AppStatusBar"
 import AppBar from "./components/AppBar"
 import FloatingActionButton from "./common/FloatingActionButton"
+import TodoForm from "./components/TodoForm"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
 import { faPlus } from "@fortawesome/free-solid-svg-icons"
@@ -31,20 +32,21 @@ export default class App extends React.Component {
         ]
     }
 
+
+
     render() {
         return (
-            <View style={{ flex: 1 }}>
+            <View style={styles.container}>
                 <AppStatusBar />
-                <View style={styles.container}>
+                <View style={{ flex: 1 }}>
                     <AppBar />
                     <TodoList todos={this.state.todos}></TodoList>
                     <View style={styles.actionButton}>
                         <FloatingActionButton />
                     </View>
                 </View>
+                <TodoForm />
             </View >
-
-
         )
     }
 }

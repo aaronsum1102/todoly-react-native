@@ -33,7 +33,8 @@ export default class ToDoCard extends React.Component<Props, State> {
         )
         return (
             <View style={styles.todoCard} >
-                <CardAtom content={content}>
+                <CardAtom>
+                    {content}
                 </CardAtom>
             </View>
         )

@@ -4,10 +4,15 @@ import Color from "../assests/ColorEnum"
 
 export interface Props {
     name: string
-    isActive: boolean,
+    isActive?: boolean,
     type?: ButtonType
     onPress?(): void,
 }
+
+export interface OptionalProps {
+
+}
+
 
 export enum ButtonType {
     CONTAINED = "contained",
@@ -16,6 +21,11 @@ export enum ButtonType {
 }
 
 export default class ButtonAtom extends React.Component<Props> {
+    static defaultProps = {
+        isActive: false,
+        type: ButtonType.CONTAINED
+    }
+
     getType() {
         let buttonType = {}
         let textType = {}

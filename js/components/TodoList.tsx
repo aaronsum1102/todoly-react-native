@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, FlatList, ListRenderItem } from "react-native"
+import { StyleSheet, FlatList } from "react-native"
 import TodoCard from "./TodoCard"
 
 interface Todo {

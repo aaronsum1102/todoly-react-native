@@ -3,16 +3,20 @@ import { StyleSheet, View } from "react-native"
 import Color from "../assests/ColorEnum"
 
 export interface Props {
-    content: JSX.Element[] | JSX.Element
+    customStyle?: Object
 }
 
 export default class CardAtom extends React.Component<Props> {
+    static defaultProps = {
+        customStyle: {}
+    }
     render() {
+        // const customCardStyle = this.props.cardBackgroundColor ?
+        //     { backgroundColor: this.props.cardBackgroundColor, borderColor: this.props.cardBackgroundColor }
+        //     : {}
         return (
-            <View style={styles.cardAtom}>
-                <View style={styles.cardAtomWrapper}>
-                    {this.props.content ? this.props.content : null}
-                </View>
+            <View style={[styles.cardAtom, this.props.customStyle]}>
+                <View style={styles.cardAtomWrapper}>{this.props.children}</View>
             </View>
         )
     }
