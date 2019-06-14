@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Text, TouchableOpacity } from "react-native"
+import { StyleSheet, View, Text, TouchableOpacity, ViewStyle } from "react-native"
 import Color from "../assests/ColorEnum"
 
 export interface Props {
@@ -7,12 +7,8 @@ export interface Props {
     isActive?: boolean,
     type?: ButtonType
     onPress?(): void,
+    customStyle?: ViewStyle
 }
-
-export interface OptionalProps {
-
-}
-
 
 export enum ButtonType {
     CONTAINED = "contained",
@@ -98,7 +94,7 @@ export default class ButtonAtom extends React.Component<Props> {
         const { buttonType, textType } = this.getType()
         const { buttonState, textState } = this.getState()
         const content = (
-            <View style={StyleSheet.flatten([styles.button, buttonType, buttonState])}>
+            <View style={StyleSheet.flatten([styles.button, buttonType, buttonState, this.props.customStyle])}>
                 <Text style={StyleSheet.flatten([styles.buttonText, textType, textState])}>{this.props.name}</Text>
             </View >
         )

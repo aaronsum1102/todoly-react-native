@@ -11,9 +11,6 @@ export default class CardAtom extends React.Component<Props> {
         customStyle: {}
     }
     render() {
-        // const customCardStyle = this.props.cardBackgroundColor ?
-        //     { backgroundColor: this.props.cardBackgroundColor, borderColor: this.props.cardBackgroundColor }
-        //     : {}
         return (
             <View style={[styles.cardAtom, this.props.customStyle]}>
                 <View style={styles.cardAtomWrapper}>{this.props.children}</View>
@@ -28,7 +25,7 @@ const styles = StyleSheet.create({
         borderColor: Color.WHITE,
         borderStyle: "solid",
         borderWidth: 2,
-        backgroundColor: Color.WHITE,
+        backgroundColor: Color.LIGHT_GRAY,
     },
     cardAtomWrapper: {
         padding: 16,

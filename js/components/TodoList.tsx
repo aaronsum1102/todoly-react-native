@@ -9,18 +9,19 @@ interface Todo {
 }
 
 export interface Props {
-    todos: Todo[]
+    todos: Todo[],
+    onCardPress(): void
 }
 
 export default class TodoList extends React.PureComponent<Props> {
     _keyExtractor = (item: Todo, index: number) => item.id
     _renderItem = ({ item }: { item: Todo }) => (
-        <TodoCard todo={item.description} id={item.id} isDone={item.isDone} />
+        <TodoCard todo={item.description} id={item.id} isDone={item.isDone} onCardPress={this.props.onCardPress} />
     )
 
     render() {
         return (
-            <FlatList<Todo>
+            <FlatList
                 keyExtractor={this._keyExtractor}
                 renderItem={this._renderItem}
                 data={this.props.todos}

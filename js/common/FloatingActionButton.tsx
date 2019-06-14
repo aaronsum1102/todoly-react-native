@@ -4,7 +4,7 @@ import { FontAwesomeIcon } from '@fortawesome/react-native-fontawesome'
 import Color from "../assests/ColorEnum"
 
 export interface Props {
-
+    onPress(): void
 }
 
 interface State {
@@ -14,7 +14,7 @@ interface State {
 export default class FloatingActionButton extends React.Component<Props, State> {
     render() {
         return (
-            <TouchableOpacity>
+            <TouchableOpacity onPress={() => this.props.onPress()}>
                 <View style={styles.floatingActionButton}>
                     <FontAwesomeIcon size={24} icon="plus" />
                 </View>

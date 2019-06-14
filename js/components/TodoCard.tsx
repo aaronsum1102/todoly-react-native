@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Text } from "react-native"
+import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native"
 import CardAtom from "../common/CardAtom"
 import Color from "../assests/ColorEnum"
 
@@ -7,6 +7,7 @@ export interface Props {
     todo: string
     isDone: boolean
     id: string
+    onCardPress(): void
 }
 
 interface State {
@@ -32,11 +33,14 @@ export default class ToDoCard extends React.Component<Props, State> {
             <Text style={[styles.todoText, todoTextState]}> {this.props.todo}</Text >
         )
         return (
-            <View style={styles.todoCard} >
-                <CardAtom>
-                    {content}
-                </CardAtom>
-            </View>
+            <TouchableWithoutFeedback onPress={() => this.props.onCardPress()}>
+                <View style={styles.todoCard} >
+                    <CardAtom customStyle={{ borderColor: Color.PRIMARY }}>
+                        {content}
+                    </CardAtom>
+                </View>
+            </TouchableWithoutFeedback>
+
         )
     }
 }

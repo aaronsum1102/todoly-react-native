@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View, Text, Platform } from "react-native"
+import { StyleSheet, View } from "react-native"
 import Color from "./assests/ColorEnum"
 import TodoList from "./components/TodoList"
 import AppStatusBar from "./components/AppStatusBar"
@@ -29,10 +29,29 @@ export default class App extends React.Component {
                 description: "todo 2",
                 isDone: false
             }
-        ]
+        ],
+        isTodoFormActive: false
     }
 
+    private postTodo = (value: string) => {
+        let todos = this.state.todos.splice(0)
+        todos.unshift({
+            id: `${value}${todos.length}`,
+            description: value,
+            isDone: false
+        })
+        this.setState({
+            todos: todos
+        })
+    }
 
+    private activateTodoForm = () => {
+        this.setState({ isTodoFormActive: true })
+    }
+
+    private deactivateTodoForm = () => {
+        this.setState({ isTodoFormActive: false })
+    }
 
     render() {
         return (
@@ -40,12 +59,17 @@ export default class App extends React.Component {
                 <AppStatusBar />
                 <View style={{ flex: 1 }}>
                     <AppBar />
-                    <TodoList todos={this.state.todos}></TodoList>
+
+                    <TodoList todos={this.state.todos} onCardPress={this.deactivateTodoForm}></TodoList>
                     <View style={styles.actionButton}>
-                        <FloatingActionButton />
+                        <FloatingActionButton onPress={this.activateTodoForm} />
                     </View>
                 </View>
-                <TodoForm />
+                <TodoForm
+                    postTodo={this.postTodo}
+                    isFormActive={this.state.isTodoFormActive}
+                    closeTodoForm={this.deactivateTodoForm}
+                />
             </View >
         )
     }

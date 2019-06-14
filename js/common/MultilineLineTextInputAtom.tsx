@@ -4,20 +4,24 @@ import Color from "../assests/ColorEnum"
 
 export interface Props {
     customStyle?: ViewStyle,
-    placeholder: string
+    placeholder: string,
+    onTextChange: Function,
+    todo: string
 }
 
 interface State {
     movePlaceHolderAnimation: Animated.Value,
     isInputFieldActive: boolean
-    inputValue: string,
 }
 
 export default class MultilineLineTextInputAtom extends React.Component<Props, State> {
+    static defaultProps = {
+        todo: ""
+    }
+
     state = {
         isInputFieldActive: false,
         movePlaceHolderAnimation: new Animated.Value(18),
-        inputValue: "",
     }
 
     private triggerInputFieldChange(state: boolean): void {
@@ -27,7 +31,7 @@ export default class MultilineLineTextInputAtom extends React.Component<Props, S
         if (state) {
             this.placehaolderAnimation(-8)
         } else {
-            if (this.state.inputValue.length === 0) {
+            if (this.props.todo.length === 0) {
                 this.placehaolderAnimation(16)
             }
         }
@@ -80,9 +84,10 @@ export default class MultilineLineTextInputAtom extends React.Component<Props, S
                 <TextInput
                     style={StyleSheet.flatten([styles.inputField, this.getTextInputStatusStyle()])}
                     multiline={true}
+                    value={this.props.todo}
                     onFocus={() => this.triggerInputFieldChange(true)}
                     onBlur={() => this.triggerInputFieldChange(false)}
-                    onChangeText={(text => this.setState({ inputValue: text }))}
+                    onChangeText={(text => this.props.onTextChange(text))}
                 />
                 <Animated.View style={{
                     ...styles.inputAtomTitle, top: movePlaceHolderAnimation
