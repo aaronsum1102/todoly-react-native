@@ -22,7 +22,7 @@ export default class App extends React.Component {
             {
                 id: "todo_3",
                 description: "todo 3",
-                isDone: false
+                isDone: true
             },
             {
                 id: "todo_2",
@@ -31,6 +31,7 @@ export default class App extends React.Component {
             }
         ],
         isTodoFormActive: false,
+        isShowDone: false
     }
 
     private postTodo = (value: string) => {
@@ -69,14 +70,31 @@ export default class App extends React.Component {
         })
     }
 
+    private toggleListStatus = () => {
+        this.setState({
+            isShowDone: !this.state.isShowDone
+        })
+    }
+
+    private getListFromType() {
+        if (this.state.isShowDone) {
+            return this.state.todos.filter(todo => todo.isDone === true)
+        } else {
+            return this.state.todos.filter(todo => todo.isDone === false)
+        }
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <AppStatusBar />
                 <View style={{ flex: 1 }}>
-                    <AppBar />
+                    <AppBar
+                        isShowDone={this.state.isShowDone}
+                        onOptionPress={this.toggleListStatus}
+                    />
                     <TodoList
-                        todos={this.state.todos}
+                        todos={this.getListFromType()}
                         onCardPress={this.deactivateTodoForm}
                         onUpdateTodoStatus={this.updateTodoStatus}
                     />

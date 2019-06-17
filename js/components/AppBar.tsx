@@ -3,7 +3,8 @@ import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native"
 import Color from "../assests/ColorEnum"
 
 export interface Props {
-    onEditPress?(): void
+    isShowDone: boolean
+    onOptionPress?(): void
 }
 
 interface State {
@@ -12,7 +13,7 @@ interface State {
 
 export default class AppBar extends React.Component<Props, State> {
     static defaultProps = {
-        isEditModeActive: false
+        isShowDone: false
     }
 
     render() {
@@ -20,9 +21,9 @@ export default class AppBar extends React.Component<Props, State> {
             <View style={styles.statusBar}>
                 <View style={styles.textContainer}>
                     <Text style={styles.appTitle}>Todoly</Text>
-                    {/* <TouchableWithoutFeedback onPress={this.props.onEditPress}> */}
-                    {/* <Text style={styles.editTodoText}>{this.props.isEditModeActive ? "Done" : "Edit"}</Text> */}
-                    {/* </TouchableWithoutFeedback> */}
+                    <TouchableWithoutFeedback onPress={this.props.onOptionPress}>
+                        <Text style={styles.editTodoText}>{this.props.isShowDone ? "Show todo" : "Show done"}</Text>
+                    </TouchableWithoutFeedback>
                 </View>
             </View>
         )
@@ -51,7 +52,8 @@ const styles = StyleSheet.create({
         fontWeight: "bold",
     },
     editTodoText: {
-        fontSize: 16,
+        alignSelf: "flex-end",
+        fontSize: 12,
         fontWeight: "bold",
         color: Color.WHITE,
         padding: 16
