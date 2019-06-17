@@ -30,7 +30,7 @@ export default class App extends React.Component {
                 isDone: false
             }
         ],
-        isTodoFormActive: false
+        isTodoFormActive: false,
     }
 
     private postTodo = (value: string) => {
@@ -53,14 +53,33 @@ export default class App extends React.Component {
         this.setState({ isTodoFormActive: false })
     }
 
+    private updateTodoStatus = (id: string) => {
+        let todos = this.state.todos.map(todo => {
+            if (todo.id === id) {
+                return {
+                    ...todo,
+                    isDone: true
+                }
+            } else {
+                return todo
+            }
+        })
+        this.setState({
+            todos: todos
+        })
+    }
+
     render() {
         return (
             <View style={styles.container}>
                 <AppStatusBar />
                 <View style={{ flex: 1 }}>
                     <AppBar />
-
-                    <TodoList todos={this.state.todos} onCardPress={this.deactivateTodoForm}></TodoList>
+                    <TodoList
+                        todos={this.state.todos}
+                        onCardPress={this.deactivateTodoForm}
+                        onUpdateTodoStatus={this.updateTodoStatus}
+                    />
                     <View style={styles.actionButton}>
                         <FloatingActionButton onPress={this.activateTodoForm} />
                     </View>

@@ -1,6 +1,7 @@
 import React from "react"
 import { StyleSheet, View, Text, TouchableWithoutFeedback } from "react-native"
 import CardAtom from "../common/CardAtom"
+import CheckBoxAtom from "../common/CheckBoxAtom"
 import Color from "../assests/ColorEnum"
 
 export interface Props {
@@ -8,6 +9,7 @@ export interface Props {
     isDone: boolean
     id: string
     onCardPress(): void
+    updateTodoItemStatus(id: string): void
 }
 
 interface State {
@@ -27,10 +29,23 @@ export default class ToDoCard extends React.Component<Props, State> {
         return todoTextState
     }
 
+    private onCheckBoxPress = () => {
+        this.props.updateTodoItemStatus(this.props.id)
+    }
+
     render() {
         const todoTextState = this.getState()
         const content = (
-            <Text style={[styles.todoText, todoTextState]}> {this.props.todo}</Text >
+            <View style={styles.todoContainer}>
+                <CheckBoxAtom
+                    isSelected={this.props.isDone}
+                    customStyle={{ marginRight: 8 }}
+                    onCheckBoxPress={this.onCheckBoxPress}
+                />
+                <Text style={[styles.todoText, todoTextState]}>
+                    {this.props.todo}
+                </Text >
+            </View>
         )
         return (
             <TouchableWithoutFeedback onPress={() => this.props.onCardPress()}>
@@ -40,7 +55,6 @@ export default class ToDoCard extends React.Component<Props, State> {
                     </CardAtom>
                 </View>
             </TouchableWithoutFeedback>
-
         )
     }
 }
@@ -52,6 +66,12 @@ const styles = StyleSheet.create({
         paddingTop: 8,
     },
     todoText: {
+        lineHeight: 24,
         fontSize: 14,
+    },
+    todoContainer: {
+        flexDirection: "row",
+        flex: 1,
+        alignItems: "center"
     }
 });
