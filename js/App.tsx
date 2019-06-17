@@ -8,8 +8,8 @@ import FloatingActionButton from "./common/FloatingActionButton"
 import TodoForm from "./components/TodoForm"
 
 import { library } from "@fortawesome/fontawesome-svg-core"
-import { faPlus } from "@fortawesome/free-solid-svg-icons"
-library.add(faPlus)
+import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
+library.add(faPlus, faTrash)
 
 export default class App extends React.Component {
     state = {
@@ -46,8 +46,16 @@ export default class App extends React.Component {
         })
     }
 
-    private activateTodoForm = () => {
-        this.setState({ isTodoFormActive: true })
+    private onFABPress = () => {
+        if (!this.state.isShowDone) {
+            this.setState({ isTodoFormActive: true })
+        } else {
+            let todos = this.state.todos.filter(todo => todo.isDone === false)
+            this.setState({
+                todos: todos,
+                isShowDone: !this.state.isShowDone
+            })
+        }
     }
 
     private deactivateTodoForm = () => {
@@ -99,7 +107,10 @@ export default class App extends React.Component {
                         onUpdateTodoStatus={this.updateTodoStatus}
                     />
                     <View style={styles.actionButton}>
-                        <FloatingActionButton onPress={this.activateTodoForm} />
+                        <FloatingActionButton
+                            iconName={this.state.isShowDone ? "trash" : "plus"}
+                            onPress={this.onFABPress}
+                        />
                     </View>
                 </View>
                 <TodoForm
