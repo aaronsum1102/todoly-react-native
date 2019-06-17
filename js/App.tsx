@@ -11,50 +11,25 @@ import { library } from "@fortawesome/fontawesome-svg-core"
 import { faPlus, faTrash } from "@fortawesome/free-solid-svg-icons"
 library.add(faPlus, faTrash)
 
+import TodoStore from "./mobx/TodoStore"
+import { observer } from "mobx-react";
+
+@observer
 export default class App extends React.Component {
     state = {
-        todos: [
-            {
-                id: "todo_1",
-                description: "todo 1",
-                isDone: false
-            },
-            {
-                id: "todo_3",
-                description: "todo 3",
-                isDone: true
-            },
-            {
-                id: "todo_2",
-                description: "todo 2",
-                isDone: false
-            }
-        ],
         isTodoFormActive: false,
         isShowDone: false
     }
 
     private postTodo = (value: string) => {
-        let todos = this.state.todos.splice(0)
-        todos.unshift({
-            id: `${value}${todos.length}`,
-            description: value,
-            isDone: false
-        })
-        this.setState({
-            todos: todos
-        })
+        TodoStore.addTodo(value)
     }
 
     private onFABPress = () => {
         if (!this.state.isShowDone) {
             this.setState({ isTodoFormActive: true })
         } else {
-            let todos = this.state.todos.filter(todo => todo.isDone === false)
-            this.setState({
-                todos: todos,
-                isShowDone: !this.state.isShowDone
-            })
+            TodoStore.clearCompletedTodo()
         }
     }
 
@@ -63,19 +38,7 @@ export default class App extends React.Component {
     }
 
     private updateTodoStatus = (id: string) => {
-        let todos = this.state.todos.map(todo => {
-            if (todo.id === id) {
-                return {
-                    ...todo,
-                    isDone: true
-                }
-            } else {
-                return todo
-            }
-        })
-        this.setState({
-            todos: todos
-        })
+        TodoStore.updateTodoStatus(id)
     }
 
     private toggleListStatus = () => {
@@ -86,9 +49,9 @@ export default class App extends React.Component {
 
     private getListFromType() {
         if (this.state.isShowDone) {
-            return this.state.todos.filter(todo => todo.isDone === true)
+            return TodoStore.completedTodos
         } else {
-            return this.state.todos.filter(todo => todo.isDone === false)
+            return TodoStore.todos
         }
     }
 

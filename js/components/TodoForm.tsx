@@ -13,7 +13,6 @@ export interface Props {
 }
 
 interface State {
-
     todo: string
 }
 
