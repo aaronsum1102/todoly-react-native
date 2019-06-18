@@ -55,6 +55,10 @@ export default class App extends React.Component {
         }
     }
 
+    componentDidMount() {
+        TodoStore.fetchTodos()
+    }
+
     render() {
         return (
             <View style={styles.container}>
