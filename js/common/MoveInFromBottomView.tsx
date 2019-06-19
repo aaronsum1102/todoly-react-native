@@ -41,7 +41,7 @@ export default class MoveInFromBottomView extends React.Component<Props, State> 
         if (prevProps.isFromBottomToTop && !this.props.isFromBottomToTop) {
             setTimeout(
                 () => this.setState({ shouldRender: false }),
-                800
+                500
             )
         } else if (!prevProps.isFromBottomToTop && this.props.isFromBottomToTop) {
             this.setState({ shouldRender: true })
