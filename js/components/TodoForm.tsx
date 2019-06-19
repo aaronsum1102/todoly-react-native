@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, Platform, View, Alert } from "react-native"
+import { StyleSheet, Platform, View } from "react-native"
 import Color from "../assests/ColorEnum"
 import CardAtom from "../common/CardAtom"
 import MoveInFromBottomView from "../common/MoveInFromBottomView"
@@ -19,14 +19,6 @@ interface State {
 export default class TodoForm extends React.Component<Props, State> {
     state = {
         todo: ""
-    }
-
-    private getAnimationEndValue(): number {
-        if (this.props.isFormActive) {
-            return Platform.OS === "ios" ? 189 : 152
-        } else {
-            return 1000
-        }
     }
 
     private customStyle = {
@@ -58,15 +50,22 @@ export default class TodoForm extends React.Component<Props, State> {
 
     private saveTodo = () => {
         this.props.postTodo(this.state.todo)
-        this.clearTodo()
         this.props.closeTodoForm()
+    }
+
+    componentDidUpdate(prevProps: Props) {
+        if (prevProps.isFormActive && !this.props.isFormActive) {
+            this.clearTodo()
+        }
     }
 
     render() {
         return (
             <MoveInFromBottomView
                 style={styles.todoForm}
-                toValue={this.getAnimationEndValue()}
+                isFromBottomToTop={this.props.isFormActive}
+                startValue={1000}
+                endValue={Platform.OS === "ios" ? 189 : 152}
             >
                 <CardAtom customStyle={this.customStyle}>
                     <MultilineLineTextInputAtom

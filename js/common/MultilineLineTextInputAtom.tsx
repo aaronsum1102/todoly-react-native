@@ -6,7 +6,7 @@ export interface Props {
     customStyle?: ViewStyle,
     placeholder: string,
     onTextChange: Function,
-    todo: string
+    todo: string,
 }
 
 interface State {

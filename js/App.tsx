@@ -1,5 +1,5 @@
 import React from "react"
-import { StyleSheet, View } from "react-native"
+import { StyleSheet, View, TouchableWithoutFeedback } from "react-native"
 import Color from "./assests/ColorEnum"
 import TodoList from "./components/TodoList"
 import AppStatusBar from "./components/AppStatusBar"
@@ -18,7 +18,7 @@ import { observer } from "mobx-react";
 export default class App extends React.Component {
     state = {
         isTodoFormActive: false,
-        isShowDone: false
+        isShowDone: false,
     }
 
     private postTodo = (value: string) => {
@@ -27,14 +27,18 @@ export default class App extends React.Component {
 
     private onFABPress = () => {
         if (!this.state.isShowDone) {
-            this.setState({ isTodoFormActive: true })
+            this.setState({
+                isTodoFormActive: true,
+            })
         } else {
             TodoStore.clearCompletedTodo()
         }
     }
 
     private deactivateTodoForm = () => {
-        this.setState({ isTodoFormActive: false })
+        this.setState({
+            isTodoFormActive: false
+        })
     }
 
     private updateTodoStatus = (id: string) => {
@@ -45,6 +49,7 @@ export default class App extends React.Component {
         this.setState({
             isShowDone: !this.state.isShowDone
         })
+        this.deactivateTodoForm()
     }
 
     private getListFromType() {
@@ -63,23 +68,24 @@ export default class App extends React.Component {
         return (
             <View style={styles.container}>
                 <AppStatusBar />
-                <View style={{ flex: 1 }}>
-                    <AppBar
-                        isShowDone={this.state.isShowDone}
-                        onOptionPress={this.toggleListStatus}
-                    />
-                    <TodoList
-                        todos={this.getListFromType()}
-                        onCardPress={this.deactivateTodoForm}
-                        onUpdateTodoStatus={this.updateTodoStatus}
-                    />
-                    <View style={styles.actionButton}>
-                        <FloatingActionButton
-                            iconName={this.state.isShowDone ? "trash" : "plus"}
-                            onPress={this.onFABPress}
+                <TouchableWithoutFeedback onPress={this.deactivateTodoForm}>
+                    <View style={{ flex: 1 }}>
+                        <AppBar
+                            isShowDone={this.state.isShowDone}
+                            onOptionPress={this.toggleListStatus}
                         />
+                        <TodoList
+                            todos={this.getListFromType()}
+                            onUpdateTodoStatus={this.updateTodoStatus}
+                        />
+                        <View style={styles.actionButton}>
+                            <FloatingActionButton
+                                iconName={this.state.isShowDone ? "trash" : "plus"}
+                                onPress={this.onFABPress}
+                            />
+                        </View>
                     </View>
-                </View>
+                </TouchableWithoutFeedback>
                 <TodoForm
                     postTodo={this.postTodo}
                     isFormActive={this.state.isTodoFormActive}

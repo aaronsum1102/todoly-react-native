@@ -10,7 +10,6 @@ interface Todo {
 }
 export interface Props {
     todos: Todo[],
-    onCardPress(): void
     onUpdateTodoStatus(id: string): void
 }
 
@@ -24,7 +23,6 @@ export default class TodoList extends React.PureComponent<Props> {
             todo={item.description}
             id={item.id}
             isDone={item.isDone}
-            onCardPress={this.props.onCardPress}
             updateTodoItemStatus={this.props.onUpdateTodoStatus}
         />
     )
